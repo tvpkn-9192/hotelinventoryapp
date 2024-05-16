@@ -3,6 +3,8 @@ import { Room, RoomList } from './rooms';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
 import { Observable, Subject, Subscription, catchError, map, of } from 'rxjs';
+import { ConfigService } from '../services/config.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'hinv-rooms',
@@ -52,11 +54,14 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
     })
   );
 
+
+  priceFilter = new FormControl(0);
+
   roomsCount$ = this.roomsService.getRooms$.pipe(
     map((rooms) => rooms.length)
   )
 
-  constructor(private roomsService: RoomsService) { }
+  constructor(private roomsService: RoomsService, private configService: ConfigService) { }
 
 
   ngAfterViewChecked(): void {
@@ -64,8 +69,8 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
   }
 
   ngAfterViewInit(): void {
-    this.headerComponent.title = "Rooms View";
-    this.headerChildrenComponent.last.title = "Last Title";
+    // this.headerComponent.title = "Rooms View";
+    // this.headerChildrenComponent.last.title = "Last Title";
   }
  
   ngDoCheck(): void {
